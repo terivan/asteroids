@@ -9,7 +9,7 @@ from player import Player
 def main():
     pygame.init()
     clock = pygame.time.Clock()
-    dt = 0
+    dt = 100
     x = SCREEN_WIDTH / 2
     y = SCREEN_HEIGHT / 2
 
@@ -23,7 +23,7 @@ def main():
         screen.fill(color='black')
         player.draw(screen)
         pygame.display.flip()
-
+        player.update(dt)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
