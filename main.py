@@ -2,14 +2,17 @@
 # the open-source pygame library
 # throughout this file
 import pygame
+from asteroid import Asteroid
 from constants import *
 from circleshape import *
 from player import Player
+from asteroid import Asteroid
+from asteroidfield import AsteroidField
 
 def main():
     pygame.init()
     clock = pygame.time.Clock()
-    dt = 100
+    dt = 0
     x = SCREEN_WIDTH / 2
     y = SCREEN_HEIGHT / 2
 
@@ -17,13 +20,31 @@ def main():
         raise pygame.error("Screen width or heigt undefined")
 
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    asteroids = pygame.sprite.Group()
+
+    Player.containers = (updatable, drawable)
+
     player = Player(x,y)
+
+    Asteroid.containers = (asteroids, updatable, drawable)
+    AsteroidField.containers = (updatable)
+
+    asteroid_field = AsteroidField()
 
     while True:
         screen.fill(color='black')
-        player.draw(screen)
+        for u in updatable:
+            u.update(dt)
+
+        for d in drawable:
+            d.draw(screen)
+
+        # player.draw(screen)
         pygame.display.flip()
-        player.update(dt)
+        # player.update(dt)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
