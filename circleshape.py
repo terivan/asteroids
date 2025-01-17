@@ -22,8 +22,6 @@ class CircleShape(pygame.sprite.Sprite):
         return pygame.math.Vector2.distance_squared_to(self.position,
             circle.position) <= self.radius + circle.radius
 
-
-
     def update(self, dt):
         # sub-classes must override
         pass
